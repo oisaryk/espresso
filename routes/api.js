@@ -30,7 +30,7 @@ router.get('/crypto', async (req, res) => {
 			res.json(result)
 			res.end()
 		} catch (error) {
-			res.end('error', error)
+			res.status(404).end('error', error)
 		}
 	}
 
