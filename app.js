@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config()
+const axios = require('axios');
+
+
 
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api')
@@ -43,6 +46,13 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+
+
+
+
 
 async function establishDatabaseConnection() {
   try {
