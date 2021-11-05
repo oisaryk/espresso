@@ -22,24 +22,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/crypto', async (req, res) => {
-
-	 // axios.get('https://api2.binance.com/api/v3/ticker/24hr')
-		// .then(function (response) {
-		// 	// handle success
-		// 	let result = response.data
-	 //
-		// 	res.json('ok');
-		// })
-		// .catch(function (error) {
-		// 	// handle error
-		// 	console.log(error);
-		// 	res.end('no ok');
-		// })
-		// .finally(function () {
-		// 	res.end('ok')
-		// 	// always executed
-		// });
-
 	async function getCtypto() {
 		try {
 			const response = await axios.get('https://api2.binance.com/api/v3/ticker/24hr');
