@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 
 const indexRouter = require('./routes/index');
-const apiRouter = require('./routes/api')
+const apiRouter = require('./routes/api');
+const apiTime = require('./routes/timestamp')
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
+app.use('/timestamp',apiTime);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
