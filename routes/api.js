@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/crypto', async (req, res) => {
-	async function getCtypto() {
+	async function getCrypto() {
 		try {
 			const response = await axios.get('https://api2.binance.com/api/v3/ticker/24hr');
 			let result = response.data
@@ -34,7 +34,7 @@ router.get('/crypto', async (req, res) => {
 		}
 	}
 
-	await getCtypto()
+	await getCrypto()
 })
 
 
