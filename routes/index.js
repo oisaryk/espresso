@@ -8,4 +8,8 @@ router.get('/', (req, res, next) => {
   res.render('index', { title: "Espresso" });
 });
 
+router.get('/demo', (req, res, next) => {
+  res.status(200).send({ message: 'Hello' });
+});
+
 module.exports = router;
