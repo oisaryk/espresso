@@ -11,6 +11,7 @@ const swaggerDocument = require('./swagger.json');
 
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api')
+const fakeUserRouter = require('./routes/fakeuser')
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
+
+app.use('/api/fakeuser', fakeUserRouter);
 app.use('/api/crypto', apiRouter);
 
 // catch 404 and forward to error handler
@@ -53,7 +56,7 @@ async function establishDatabaseConnection() {
   try {
     await mongoose.connect(process.env.DB_URL,{ useNewUrlParser: true }, (err) => {});
   } catch (e) {
-    console.log("Could not connect to the database. Error...", err);
+    console.log("Could not connect to the database. Error...", e);
     process.exit();
   } finally {
     console.log("Successfully connected to the database");

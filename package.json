@@ -8,6 +8,7 @@
     "test": "mocha --timeout 10000"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "chai": "^4.3.4",
     "chai-dom": "^1.10.0",
     "cookie-parser": "~1.4.4",
