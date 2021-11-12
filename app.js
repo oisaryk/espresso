@@ -6,6 +6,9 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config()
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api')
 const fakeUserRouter = require('./routes/fakeuser')
@@ -13,6 +16,7 @@ const fakeUserRouter = require('./routes/fakeuser')
 const app = express();
 
 mongoose.Promise = global.Promise;
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 establishDatabaseConnection();
 
@@ -28,7 +32,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
-app.use('/api/fakeuser', fakeUserRouter)
+
+app.use('/api/fakeuser', fakeUserRouter);
+app.use('/api/crypto', apiRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
