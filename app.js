@@ -3,38 +3,47 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mongoose = require('mongoose');
-require('dotenv').config()
-
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
 
-const indexRouter = require('./routes/index');
-const apiRouter = require('./routes/api')
-const fakeUserRouter = require('./routes/fakeuser')
+const swaggerDocument = require('./swagger.json');
+const appRouter = require('./routes/appRoutes');
+const statisticRouter = require('./routes/statisticRoutes');
+const fakeUserRouter = require('./routes/fakeuser');
+const dbConnection = require('./services/dbconnection.service');
+
+require('dotenv').config();
 
 const app = express();
 
-mongoose.Promise = global.Promise;
+// Connect to the database
+dbConnection.establishDatabaseConnection();
+
+// Swagger middleware
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-establishDatabaseConnection();
-
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// Logger
 app.use(logger('dev'));
+
+// JSON convert
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Cookie parser
 app.use(cookieParser());
+
+// Static files 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/api', apiRouter);
+// Routes
+app.use('/', appRouter);
 
+app.use('/statistic', statisticRouter);
 app.use('/api/fakeuser', fakeUserRouter);
-app.use('/api/crypto', apiRouter);
+app.use('/api/crypto', appRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -52,15 +61,5 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-async function establishDatabaseConnection() {
-  try {
-    await mongoose.connect(process.env.DB_URL,{ useNewUrlParser: true }, (err) => {});
-  } catch (e) {
-    console.log("Could not connect to the database. Error...", e);
-    process.exit();
-  } finally {
-    console.log("Successfully connected to the database");
-  }
-}
 
 module.exports = app;

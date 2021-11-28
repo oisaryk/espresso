@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon start --exec 'mocha -R min'",
+    "dev": "nodemon start",
+    "dev-test": "nodemon start --exec 'mocha -R min'",
     "test": "mocha --timeout 10000"
   },
   "dependencies": {

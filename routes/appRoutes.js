@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
-const { success, error } = require('../utils/responses.js');
+const { mainRoute, demoRoute } = require('../controllers/app.controller');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: "Espresso" });
+  mainRoute(req, res, next);
 });
 
 router.get('/demo', (req, res, next) => {
-  res.status(200).send({ message: 'Hello' });
+  demoRoute(req, res, next);
 });
 
 module.exports = router;
